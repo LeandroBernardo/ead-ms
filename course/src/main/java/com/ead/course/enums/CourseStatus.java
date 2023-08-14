@@ -4,4 +4,3 @@ public enum CourseStatus {
     INPROGRESS,
     CONCLUDED;
 }
-

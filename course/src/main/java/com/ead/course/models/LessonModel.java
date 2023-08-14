@@ -34,4 +34,3 @@ public class LessonModel implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ModuleModel module;
 }
-
