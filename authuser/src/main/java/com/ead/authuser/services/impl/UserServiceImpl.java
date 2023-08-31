@@ -1,13 +1,12 @@
 package com.ead.authuser.services.impl;
 
 import com.ead.authuser.models.UserModel;
-import com.ead.authuser.services.UserService;
 import com.ead.authuser.repositories.UserRepository;
+import com.ead.authuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Override
     public List<UserModel> findAll() {
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UserModel userModel) {
-         userRepository.delete(userModel);;
+        userRepository.delete(userModel);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean existsByUserName(String username) {
+    public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 

@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -25,19 +24,15 @@ public class AuthenticationController {
     @Autowired
     UserService userService;
 
-
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(
-            @RequestBody @Validated(UserDto.UserView.RegistrationPost.class)
-            @JsonView(UserDto.UserView.RegistrationPost.class)
-            UserDto userDto) {
-        if (userService.existsByUserName(userDto.getUsername())) {
+    public ResponseEntity<Object> registerUser(@RequestBody @Validated(UserDto.UserView.RegistrationPost.class)
+                                                   @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userDto){
+        if(userService.existsByUsername(userDto.getUsername())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Username is Already Taken!");
         }
-        if (userService.existsByEmail(userDto.getEmail())) {
+        if(userService.existsByEmail(userDto.getEmail())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Email is Already Taken!");
         }
-
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
         userModel.setUserStatus(UserStatus.ACTIVE);
@@ -45,6 +40,6 @@ public class AuthenticationController {
         userModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
         userService.save(userModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(userModel);
     }
 }
